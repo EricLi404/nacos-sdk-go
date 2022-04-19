@@ -125,8 +125,9 @@ func InitNacosLogger(config Config) (Logger, error) {
 	logLevel := getLogLevel(config.Level)
 	encoder := getEncoder()
 	writer := config.getLogWriter()
-	core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder),
-		zapcore.NewMultiWriteSyncer(writer, zapcore.AddSync(os.Stdout)), logLevel)
+	// core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder),
+	// 	zapcore.NewMultiWriteSyncer(writer, zapcore.AddSync(os.Stdout)), logLevel)
+	core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), writer, logLevel)
 	zaplogger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
 	return &NacosLogger{zaplogger.Sugar()}, nil
 }
@@ -153,7 +154,7 @@ func getEncoder() zapcore.EncoderConfig {
 	}
 }
 
-//SetLogger sets logger for sdk
+// SetLogger sets logger for sdk
 func SetLogger(log Logger) {
 	logLock.Lock()
 	defer logLock.Unlock()
