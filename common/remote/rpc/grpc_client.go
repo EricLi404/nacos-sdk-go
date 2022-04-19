@@ -108,8 +108,8 @@ func (c *GrpcClient) createNewConnection(serverInfo ServerInfo) (*grpc.ClientCon
 	opts = append(opts, grpc.WithInsecure())
 	opts = append(opts, grpc.WithInitialWindowSize(getInitialWindowSize()))
 	opts = append(opts, grpc.WithInitialConnWindowSize(getInitialConnWindowSize()))
-	rpcPort := serverInfo.serverPort + c.rpcPortOffset()
-	return grpc.Dial(serverInfo.serverIp+":"+strconv.FormatUint(rpcPort, 10), opts...)
+	// rpcPort := serverInfo.serverPort + c.rpcPortOffset()
+	return grpc.Dial(serverInfo.serverIp+":9848", opts...)
 
 }
 
